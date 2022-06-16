@@ -1,58 +1,155 @@
 <html>
 
-<script type='text/javascript' src='https://c.la3-c1cs-cdg.salesforceliveagent.com/content/g/js/54.0/deployment.js'></script>
-<script type='text/javascript'>
-
-
-
-</script>
-
-<!-- Passing Parameters --> 
-<script type='text/javascript'>
-liveagent.addCustomDetail('NomeCognome', 'Test,Deloitte');
-liveagent.addCustomDetail('CodiceContratto', '0005043087,0004000040');
-//0005043087, 4031200
-//liveagent.addCustomDetail('CodiceContratto', '4031200');
-liveagent.addCustomDetail('PreChatJS', '');
-
-</script>
-
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js">
+    </script>
 <body>
-<div style="display: inline-block;">
-<h1>Area Pubblica</h1>
-<img id="liveagent_button_online_5733X000000HVz7" style="display: block; height: 40px; border: 0px none; cursor: pointer"  onclick="liveagent.startChat('5733X000000HVz7')" src="https://preprod-safoliveagent.cs160.force.com/pubblicaweb/resource/1512378931000/OperatoreOnline" />
 
-<img id="liveagent_button_offline_5733X000000HVz7" style="display: none; height: 40px; border: 0px none; cursor: pointer"  src="https://preprod-safoliveagent.cs160.force.com/pubblicaweb/resource/1512378931000/OperatoreOffline" />
+    <h1>Test Emb</h1>
+	
+	<button type="button" id="trigger" onclick="initialize_chat()"> CHAT </button>
+	<button type="button" id="trigger" onclick="initialize_chat2()"> CHAT MIN </button>
+	
+	<script type='text/javascript'>
+		
+		//function initialize_chat(){
+		//	embedded_svc.bootstrapEmbeddedService();
+		//}
+		function initialize_chat2(){
+			document.querySelectorAll(".sidebarMinimized")[0].getElementsByClassName("minimizedContainer")[0].click()
+		}
+		function initialize_chat(){
+			document.getElementById("helpButtonSpan").click();
+			
+			
+		}
+	
+	</script>
 
-<script type="text/javascript">
-if (!window._laq) { window._laq = []; }
-window._laq.push(function(){liveagent.showWhenOnline('5733X000000HVz7', document.getElementById('liveagent_button_online_5733X000000HVz7'));
-liveagent.showWhenOffline('5733X000000HVz7', document.getElementById('liveagent_button_offline_5733X000000HVz7'));
-});</script>
+	<style type='text/css'>
+        input{
+	margin-left: 30px !important;
+	width: auto;
+	height: 10px !important;
+	border-radius: 30px !important;
+	background-color: rgba(238, 241, 247, 0.7);
+}
+    </style>
+
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+        var initESW = function (gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = 'it-IT'; //For example, enter 'en' or 'en-US'
+	    embedded_svc.settings.storageDomain = "github.io";
+
+            //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+            //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+            //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+            //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+            // Settings for Chat
+            //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+            // Returns a valid button ID.
+            //};
+
+	    let language = "it";
+	    let cfiscale = "CCCFFF22H22975X";
+            let piva = "PIVA1234";
+	    let cod_cliente = "9597176";
+            let cod_integra = "2013C5495988,2014C1111111";
+            let cod_user_web = "a2N9E000002nm6NUAQ";
+            let mode = "Privata";
+	    let contratti ="0006603109,0006603110";
+
+            embedded_svc.settings.extraPrechatInfo = [{
+                "entityFieldMaps":
+                    [{ "doCreate": false, "doFind": false, "fieldName": "LastName", "isExactMatch": true, "label": "Last Name" },
+                    { "doCreate": false, "doFind": false, "fieldName": "FirstName", "isExactMatch": true, "label": "First Name" }],
+                "entityName": "Contact", "saveToTranscript": "Contact", "showOnCreate": true
+            },
+            {
+                "entityFieldMaps":
+                    [{ "doCreate": false, "doFind": true, "fieldName": "Indirizzo_Email__c", "isExactMatch": true, "label": "Indirizzo Email" },
+                    { "doCreate": false, "doFind": true, "fieldName": "Numero_Utenza__c", "isExactMatch": true, "label": "Numero Utenza" },
+                    { "doCreate": false, "doFind": true, "fieldName": "Telefono_Mobile_Intestatario__c", "isExactMatch": true, "label": "Telefono" },
+		    { "doCreate": false, "doFind": true, "fieldName": "Numero_4_Bolletta__c", "isExactMatch": true, "label": "Altre Bollette" },
+		    { "doCreate": false, "doFind": true, "fieldName": "Codice_Anagrafico_COM__c", "isExactMatch": true, "label": "Codice Anagrafico (COM)" },
+                    { "doCreate": false, "doFind": true, "fieldName": "Commenti__c", "isExactMatch": true, "label": "Commenti" }],
+                "entityName": "Case", "saveToTranscript": "Case", "showOnCreate": true
+            }];
+
+            embedded_svc.settings.extraPrechatFormDetails = [{ "label": "Indirizzo Email", "transcriptFields": ["Indirizzo_email__c"], "displayToAgent": true },
+            { "label": "Codice Fiscale", "value": cfiscale, "transcriptFields": ["Codice_Fiscale__c"], "displayToAgent": true },
+            { "label": "Partita IVA", "value": piva, "transcriptFields": ["Partita_IVA__c"], "displayToAgent": true },
+            { "label": "Numero Utenza", "value": cod_cliente, "transcriptFields": ["Codice_Cliente__c"], "displayToAgent": true },
+            { "label": "Altre Bollette", "transcriptFields": ["Codice_Id_Contratto__c"], "displayToAgent": true },
+	    { "label": "Codice Anagrafico (COM)", "transcriptFields": ["Codice_Integra__c"], "displayToAgent": true },
+            { "label": "Codice User Web", "value": cod_user_web, "transcriptFields": ["Codice_User_Web__c"], "displayToAgent": true },
+            { "label": "Mode", "value": mode, "transcriptFields": ["Mode__c"], "displayToAgent": true }];
 
 
+            embedded_svc.settings.prepopulatedPrechatFields = {
+                FirstName: "Laura",
+                LastName: "Rossi",
+                Commenti__c: mode,
+		Numero_Utenza__c: cod_cliente,
+		Numero_4_Bolletta__c: contratti,
+		Codice_Anagrafico_COM__c: cod_integra,
+		Language: language
+            }; //Sets the auto-population of pre-chat form fields
+	
+            //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+            embedded_svc.settings.offlineSupportMinimizedText = 'CHAT'; //(Defaults to Contact Us)
 
-</div>
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+		
+	    embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+    		console.log("onHelpButtonClick event was fired.");
+	    });
+		
+	    embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
+    		console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+		});
+ 
+	    embedded_svc.addEventHandler("onChatEndedByAgent", function(data) {
+    		console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+		});
+		
+	    embedded_svc.addEventHandler("afterMinimize", function(data) {
+    		console.log("afterMinimize event was fired.");
+		});
 
-<div style="display: inline-block;">
-<h1>Area Privata</h1>
-<img id="liveagent_button_online_5733X000000HVz6" style="display: block; height: 40px; border: 0px none; cursor: pointer"  onclick="liveagent.startChat('5733X000000HVz6')" src="https://preprod-safoliveagent.cs160.force.com/privataweb/resource/1512378931000/OperatoreOnline" />
+            embedded_svc.init(
+		'https://gruppocap--preprod.my.salesforce.com',
+		'https://preprod-safoliveagent.cs88.force.com/chatbot',
+		gslbBaseURL,
+		'00D9E000000A3Gz',
+		'Chatbot_Embedded',
+		{
+			baseLiveAgentContentURL: 'https://c.la2-c1cs-fra.salesforceliveagent.com/content',
+			deploymentId: '5720O0000004GXz',
+			buttonId: '5739E000000029l',
+			baseLiveAgentURL: 'https://d.la2-c1cs-fra.salesforceliveagent.com/chat',
+			eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I9E00000000jVUAQ_1816652a12e',
+			isOfflineSupportEnabled: false
+		}
+	);
+};
 
-<img id="liveagent_button_offline_5733X000000HVz6" style="display: none; height: 40px; border: 0px none; cursor: pointer" src="https://preprod-safoliveagent.cs160.force.com/privataweb/resource/1512378931000/OperatoreOffline" />
+if (!window.embedded_svc) {
+	var s = document.createElement('script');
+	s.setAttribute('src', 'https://gruppocap--preprod.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+	s.onload = function () {
+		initESW(null);
+	};
+	document.body.appendChild(s);
+} else {
+	initESW('https://service.force.com');
+}
+    </script>
+</body>
 
-<script type="text/javascript">
-if (!window._laq) { window._laq = []; }
-window._laq.push(function(){liveagent.showWhenOnline('5733X000000HVz6', document.getElementById('liveagent_button_online_5733X000000HVz6'));
-liveagent.showWhenOffline('5733X000000HVz6', document.getElementById('liveagent_button_offline_5733X000000HVz6'));
-});
-
-liveagent.init('https://d.la3-c1cs-cdg.salesforceliveagent.com/chat', '5720O0000004GXz', '00D5r0000004fIv');
-</script>
-</div>
-<br><hr>
-<iframe name="chatFrame" style="height:746px; width: 375px;">
-
-</iframe>
-
-</body> 
 </html>
