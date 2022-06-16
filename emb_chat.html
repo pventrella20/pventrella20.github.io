@@ -1,0 +1,127 @@
+<html>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js">
+    </script>
+<body>
+
+    <h1>Test Emb</h1>
+	
+	<button type="button" id="trigger" onclick="bootstrapChat()"> CHAT </button>
+	
+	<script type='text/javascript'>
+		
+		function bootstrapChat() {
+		embedded_svc.bootstrapEmbeddedService();
+	}
+		
+// 		$( "#trigger" ).on( "click", function() {
+// 		  $( ".helpButtonEnabled.uiButton" ).click();
+// 		});
+	
+	</script>
+
+    <style type='text/css'>
+        .helpButton {
+		display: block;
+	}
+    </style>
+
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+        var initESW = function (gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = 'it'; //For example, enter 'en' or 'en-US'
+
+            //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+            //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+            //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+            //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+            // Settings for Chat
+            //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+            // Returns a valid button ID.
+            //};
+
+	    let language = "it";
+	    let cfiscale = "CCCFFF22H22975X";
+            let piva = "PIVA1234";
+            let cod_integra = "2013C5495988,2014C1111111,2015C2222222";
+            let cod_user_web = "a2N0D00000782YoUAI";
+            let mode = "Privata";
+	    let contratti ="0006121286,0006121290,0006121298";
+
+            embedded_svc.settings.extraPrechatInfo = [{
+                "entityFieldMaps":
+                    [{ "doCreate": false, "doFind": false, "fieldName": "LastName", "isExactMatch": true, "label": "Last Name" },
+                    { "doCreate": false, "doFind": false, "fieldName": "FirstName", "isExactMatch": true, "label": "First Name" }],
+                "entityName": "Contact", "saveToTranscript": "Contact", "showOnCreate": true
+            },
+            {
+                "entityFieldMaps":
+                    [{ "doCreate": false, "doFind": true, "fieldName": "Indirizzo_Email__c", "isExactMatch": true, "label": "Indirizzo Email" },
+                    { "doCreate": false, "doFind": true, "fieldName": "Numero_Utenza__c", "isExactMatch": true, "label": "Numero Utenza" },
+                    { "doCreate": false, "doFind": true, "fieldName": "Telefono_Mobile_Intestatario__c", "isExactMatch": true, "label": "Telefono" },
+		    { "doCreate": false, "doFind": true, "fieldName": "Numero_4_Bolletta__c", "isExactMatch": true, "label": "Altre Bollette" },
+		    { "doCreate": false, "doFind": true, "fieldName": "Codice_Anagrafico_COM__c", "isExactMatch": true, "label": "Codice Anagrafico (COM)" },
+                    { "doCreate": false, "doFind": true, "fieldName": "Commenti__c", "isExactMatch": true, "label": "Commenti" }],
+                "entityName": "Case", "saveToTranscript": "Case", "showOnCreate": true
+            }];
+
+            embedded_svc.settings.extraPrechatFormDetails = [{ "label": "Indirizzo Email", "transcriptFields": ["Indirizzo_email__c"], "displayToAgent": true },
+            { "label": "Codice Fiscale", "value": cfiscale, "transcriptFields": ["Codice_Fiscale__c"], "displayToAgent": true },
+            { "label": "Partita IVA", "value": piva, "transcriptFields": ["Partita_IVA__c"], "displayToAgent": true },
+            { "label": "Numero Utenza", "transcriptFields": ["Codice_Cliente__c"], "displayToAgent": true },
+            { "label": "Altre Bollette", "transcriptFields": ["Codice_Id_Contratto__c"], "displayToAgent": true },
+	    { "label": "Codice Anagrafico (COM)", "transcriptFields": ["Codice_Integra__c"], "displayToAgent": true },
+            { "label": "Codice User Web", "value": cod_user_web, "transcriptFields": ["Codice_User_Web__c"], "displayToAgent": true },
+            { "label": "Mode", "value": mode, "transcriptFields": ["Mode__c"], "displayToAgent": true }];
+
+
+            embedded_svc.settings.prepopulatedPrechatFields = {
+                FirstName: "John",
+                LastName: "Doe",
+                Commenti__c: mode,
+		Numero_4_Bolletta__c: contratti,
+		Codice_Anagrafico_COM__c: cod_integra,
+		Language: language
+            }; //Sets the auto-population of pre-chat form fields
+	
+            //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+            embedded_svc.settings.offlineSupportMinimizedText = 'CHAT'; //(Defaults to Contact Us)
+
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+
+            embedded_svc.init(
+                'https://gruppocap--chatbot.my.salesforce.com',
+                'https://chatbot-safoliveagent.cs106.force.com/pubblicaweb',
+                gslbBaseURL,
+                '00D0D000000CvT5',
+                'Test_Emb_Deployment',
+                {
+                    baseLiveAgentContentURL: 'https://c.la1-c1cs-cdg.salesforceliveagent.com/content',
+                    deploymentId: '5720D0000008OdD',
+                    buttonId: '5730D0000008Oec',
+                    baseLiveAgentURL: 'https://d.la1-c1cs-cdg.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'Test_emb',
+                    isOfflineSupportEnabled: true
+                }
+            );
+        };
+
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://gruppocap--chatbot.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function () {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW('https://service.force.com');
+        }
+    </script>
+</body>
+
+</html>
