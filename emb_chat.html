@@ -52,19 +52,6 @@
         let cod_user_web = "a2N0D00000782YoUAI";
         let mode = "Privata";  // valore “Pubblica” o “Privata”
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         //matching dei campi di prechat con i field corrispondenti in Salesforce
         embedded_svc.settings.extraPrechatInfo = [{
             "entityFieldMaps":
@@ -82,19 +69,6 @@
                 { "doCreate": false, "doFind": false, "fieldName": "Commenti__c", "isExactMatch": true, "label": "Commenti" }],
             "entityName": "Case", "saveToTranscript": "Case", "showOnCreate": false
         }];
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //trascrizione dei campi passati in background e via input utente, da passare vuoti se in chat Pubblica o se dato non disponibile
         embedded_svc.settings.extraPrechatFormDetails = [{ "label": "Indirizzo Email", "transcriptFields": ["Indirizzo_email__c"], "displayToAgent": true },
@@ -119,16 +93,6 @@
     
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
-
-
-
-
-
-
-
-
-
-
 
         embedded_svc.init(
             'https://gruppocap--featpaolo.sandbox.my.salesforce.com',
