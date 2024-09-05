@@ -12,8 +12,8 @@
 
     <script type='text/javascript'>
 
-        function initialize_chat(){
-        	embedded_svc.bootstrapEmbeddedService();
+        function initialize_chat() {
+            embedded_svc.bootstrapEmbeddedService();
         }
         function initialize_chat2() {
             document.querySelectorAll(".sidebarMinimized")[0].getElementsByClassName("minimizedContainer")[0].click()
@@ -109,33 +109,33 @@
                 console.log("afterMinimize event was fired.");
             });
 
-           embedded_svc.init(
-            'https://gruppocap--billprepro.sandbox.my.salesforce.com',
-            'https://gruppocap--billprepro.sandbox.my.salesforce-sites.com/chatbot',
-            gslbBaseURL,
-            '00DMA000001Exqr',
-            'Chatbot_Embedded',
-            {
-                baseLiveAgentContentURL: 'https://c.la2s-core1.sfdc-3d0u2f.salesforceliveagent.com/content',
-                deploymentId: '5720O0000004GXz',
-                buttonId: '5733X000000HW0T',
-                baseLiveAgentURL: 'https://d.la2s-core1.sfdc-3d0u2f.salesforceliveagent.com/chat',
-                eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I3X000000PVxJUAW_181d43e1d6e',
-                isOfflineSupportEnabled: false
-            }
-        );
-    };
-
-    if (!window.embedded_svc) {
-        var s = document.createElement('script');
-        s.setAttribute('src', 'https://gruppocap--billprepro.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-        s.onload = function() {
-            initESW(null);
+            embedded_svc.init(
+                'https://gruppocap--billprepro.sandbox.my.salesforce.com',
+                'https://gruppocap--billprepro.sandbox.my.salesforce-sites.com/chatbot',
+                gslbBaseURL,
+                '00DMA000001Exqr',
+                'Chatbot_Embedded',
+                {
+                    baseLiveAgentContentURL: 'https://c.la2s-core1.sfdc-3d0u2f.salesforceliveagent.com/content',
+                    deploymentId: '5720O0000004GXz',
+                    buttonId: '5733X000000HW0T',
+                    baseLiveAgentURL: 'https://d.la2s-core1.sfdc-3d0u2f.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I3X000000PVxJUAW_181d43e1d6e',
+                    isOfflineSupportEnabled: false
+                }
+            );
         };
-        document.body.appendChild(s);
-    } else {
-        initESW('https://service.force.com');
-    }
+
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://gruppocap--billprepro.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function () {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW('https://service.force.com');
+        }
     </script>
 </body>
 
