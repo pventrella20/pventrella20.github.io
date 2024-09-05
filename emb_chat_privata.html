@@ -1,77 +1,62 @@
-<html>
+<apex:page >
+<style type='text/css'>
+    .embeddedServiceHelpButton .helpButton .uiButton {
+        background-color: #005290;
+        font-family: "Arial", sans-serif;
+    }
+    .embeddedServiceHelpButton .helpButton .uiButton:focus {
+        outline: 1px solid #005290;
+    }
+</style>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js">
-</script>
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 
-<body>
+        //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+        //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
 
-    <h1>Test Emb</h1>
+        //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
 
-    <button type="button" id="trigger" onclick="initialize_chat()"> CHAT </button>
-    <button type="button" id="trigger" onclick="initialize_chat2()"> CHAT MIN </button>
+        // Settings for Chat
+        //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+            // Returns a valid button ID.
+        //};
+        //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+        //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+        //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
 
-    <script type='text/javascript'>
+            let language = "it";
+            let cfiscale = "03250160151";
+            let piva = "03250160151";
+            let cod_cliente = "303998";
+            let cod_integra = "2001C4013714,2019C6056408,2020C6087147";
+            let cod_user_web = "a2N3X00000JSR25UAH";
+            let mode = "Privata";
+            let contratti = "0004013714,0006056408,0006087147";
 
-        //function initialize_chat(){
-        //	embedded_svc.bootstrapEmbeddedService();
-        //}
-        function initialize_chat2() {
-            document.querySelectorAll(".sidebarMinimized")[0].getElementsByClassName("minimizedContainer")[0].click()
-        }
-        function initialize_chat() {
-            document.getElementById("helpButtonSpan").click();
+            embedded_svc.settings.extraPrechatInfo =
+                [{
+                    "entityFieldMaps":
+                        [{ "doCreate": false, "doFind": false, "fieldName": "LastName", "isExactMatch": true, "label": "Cognome" },
+                        { "doCreate": false, "doFind": false, "fieldName": "FirstName", "isExactMatch": true, "label": "Nome" }],
+                    "entityName": "Contact", "saveToTranscript": "Contact", "showOnCreate": false
+                },
+                {
+                    "entityFieldMaps":
+                        [{ "doCreate": false, "doFind": false, "fieldName": "Indirizzo_Email__c", "isExactMatch": true, "label": "Indirizzo Email" },
+                        { "doCreate": false, "doFind": false, "fieldName": "Numero_Utenza__c", "isExactMatch": true, "label": "Numero Utenza" },
+                        { "doCreate": false, "doFind": false, "fieldName": "Telefono_Mobile_Intestatario__c", "isExactMatch": true, "label": "Telefono" },
+                        { "doCreate": false, "doFind": false, "fieldName": "Numero_4_Bolletta__c", "isExactMatch": true, "label": "Altre Bollette" },
+                        { "doCreate": false, "doFind": false, "fieldName": "Codice_Anagrafico_COM__c", "isExactMatch": true, "label": "Codice Anagrafico (COM)" },
+                        { "doCreate": false, "doFind": false, "fieldName": "Commenti__c", "isExactMatch": true, "label": "Commenti" }],
+                    "entityName": "Case", "saveToTranscript": "Case", "showOnCreate": false
+                }];
 
-
-        }
-
-    </script>
-
-    <style type='text/css'>
-        input {
-            margin-left: 30px !important;
-            width: auto;
-            height: 10px !important;
-            border-radius: 30px !important;
-            background-color: rgba(238, 241, 247, 0.7);
-        }
-    </style>
-
-    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-    <script type='text/javascript'>
-        var initESW = function (gslbBaseURL) {
-            embedded_svc.settings.displayHelpButton = true; //Or false
-            embedded_svc.settings.language = 'it'; // Lingua di interfaccia ('en' or 'it')
-
-            //variabili da passare in background
-            let language = "it";   // valore “it” o “en”
-            let cfiscale = "CCCFFF22H22975X";
-            let piva = "PIVA1234";
-            let cod_cliente = "0008825149";  // codice cliente 
-            let contratti = "0006121286,0006121290,0006121298";  // numeri di contratto associati all’utenza, separati da virgole senza spazi
-            let cod_integra = "2013C5495988,2014C1111111,2015C2222222";
-            // elenco dei codici contratto integra, in ordine corrispondente al numero contratto di riferimento         
-            let cod_user_web = "a2N0D00000782YoUAI";
-            let mode = "Privata";  // valore “Pubblica” o “Privata”
-
-            //matching dei campi di prechat con i field corrispondenti in Salesforce
-            embedded_svc.settings.extraPrechatInfo = [{
-                "entityFieldMaps":
-                    [{ "doCreate": false, "doFind": false, "fieldName": "LastName", "isExactMatch": true, "label": "Cognome" },  // se la lingua di embedded_svc.settings.language è settata su ‘en’, il label deve essere settato come ‘Last Name’
-                    { "doCreate": false, "doFind": false, "fieldName": "FirstName", "isExactMatch": true, "label": "Nome" }], // se la lingua di embedded_svc.settings.language è settata su ‘en’, il label deve essere settato come ‘First Name’
-                "entityName": "Contact", "showOnCreate": false
-            },
-            {
-                "entityFieldMaps":
-                    [{ "doCreate": false, "doFind": false, "fieldName": "Indirizzo_Email__c", "isExactMatch": true, "label": "Indirizzo Email" },
-                    { "doCreate": false, "doFind": false, "fieldName": "Numero_Utenza__c", "isExactMatch": true, "label": "Numero Utenza" },
-                    { "doCreate": false, "doFind": false, "fieldName": "Telefono_Mobile_Intestatario__c", "isExactMatch": true, "label": "Telefono" },
-                    { "doCreate": false, "doFind": false, "fieldName": "Numero_4_Bolletta__c", "isExactMatch": true, "label": "Altre Bollette" },
-                    { "doCreate": false, "doFind": false, "fieldName": "Codice_Anagrafico_COM__c", "isExactMatch": true, "label": "Codice Anagrafico (COM)" },
-                    { "doCreate": false, "doFind": false, "fieldName": "Commenti__c", "isExactMatch": true, "label": "Commenti" }],
-                "entityName": "Case", "saveToTranscript": "Case", "showOnCreate": false
-            }];
-
-            //trascrizione dei campi passati in background e via input utente, da passare vuoti se in chat Pubblica o se dato non disponibile
             embedded_svc.settings.extraPrechatFormDetails = [{ "label": "Indirizzo Email", "transcriptFields": ["Indirizzo_email__c"], "displayToAgent": true },
             { "label": "Codice Fiscale", "value": cfiscale, "transcriptFields": ["Codice_Fiscale__c"], "displayToAgent": true },
             { "label": "Partita IVA", "value": piva, "transcriptFields": ["Partita_IVA__c"], "displayToAgent": true },
@@ -81,49 +66,49 @@
             { "label": "Codice User Web", "value": cod_user_web, "transcriptFields": ["Codice_User_Web__c"], "displayToAgent": true },
             { "label": "Mode", "value": mode, "transcriptFields": ["Mode__c"], "displayToAgent": true }];
 
-            // valori da pre-popolare
+
             embedded_svc.settings.prepopulatedPrechatFields = {
-                FirstName: "John",  // da passare se in chat Privata
-                LastName: "Doe",  // da passare se in chat Privata
-                Commenti__c: mode,  // è necessario che venga passato sempre come campo prepopolato, in modo da mostrare il form di prechat corretto (chat Pubblica o chat Privata)
-                Numero_Utenza__c: cod_cliente,  // è necessario per individuare il cliente
-                Numero_4_Bolletta__c: contratti,  // è necessario per la ricerca dei contratti associati all’utenza
-                Codice_Anagrafico_COM__c: cod_integra, // è necessario per associare il corretto codice integra al relativo codice contratto 
-                Language: language  // da passare per il setting della lingua
-            }; //Sets the auto-population of pre-chat form fields           
+                FirstName: "Laura",
+                LastName: "Rossi",
+                Commenti__c: mode,
+                Numero_Utenza__c: cod_cliente,
+                Numero_4_Bolletta__c: contratti,
+                Codice_Anagrafico_COM__c: cod_integra,
+                Language: language
+            }; //Sets the auto-population of pre-chat form fields
 
-            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-            embedded_svc.settings.entryFeature = 'LiveAgent';
+            //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+            embedded_svc.settings.offlineSupportMinimizedText = 'CHAT'; //(Defaults to Contact Us)
 
-            embedded_svc.init(
-                'https://gruppocap--featpaolo.sandbox.my.salesforce.com',
-                'https://gruppocap--featpaolo.sandbox.my.salesforce-sites.com/chatbot',
-                gslbBaseURL,
-                '00D0D0000008hO8',
-                'Chatbot_Embedded',
-                {
-                    baseLiveAgentContentURL: 'https://c.la1-c1cs-cdg.salesforceliveagent.com/content',
-                    deploymentId: '5720O0000004GXz',
-                    buttonId: '5730D0000008PM9',
-                    baseLiveAgentURL: 'https://d.la1-c1cs-cdg.salesforceliveagent.com/chat',
-                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0D00000000Q4UAI_181d3c5a43c',
-                    isOfflineSupportEnabled: false
-                }
-            );
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+
+        embedded_svc.init(
+            'https://gruppocap--billprepro.sandbox.my.salesforce.com',
+            'https://gruppocap--billprepro.sandbox.my.salesforce-sites.com/chatbot',
+            gslbBaseURL,
+            '00DMA000001Exqr',
+            'Chatbot_Embedded',
+            {
+                baseLiveAgentContentURL: 'https://c.la2s-core1.sfdc-3d0u2f.salesforceliveagent.com/content',
+                deploymentId: '5720O0000004GXz',
+                buttonId: '5733X000000HW0T',
+                baseLiveAgentURL: 'https://d.la2s-core1.sfdc-3d0u2f.salesforceliveagent.com/chat',
+                eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I3X000000PVxJUAW_181d43e1d6e',
+                isOfflineSupportEnabled: false
+            }
+        );
+    };
+
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://gruppocap--billprepro.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
         };
-
-        if (!window.embedded_svc) {
-            var s = document.createElement('script');
-            s.setAttribute('src', 'https://gruppocap--featpaolo.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-            s.onload = function () {
-                initESW(null);
-            };
-            document.body.appendChild(s);
-        } else {
-            initESW('https://service.force.com');
-        }
-    </script>
-
-</body>
-
-</html>
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+</script>
+</apex:page>
